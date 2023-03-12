@@ -17,8 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/usercourses', "UsercoursesColtroller@index")->name('usercourses');
-Route::get('/usercourses/create', "UsercoursesColtroller@create")->name('usercourses.create');
-
+Route::get('/usercourses/{course}/create', "UsercoursesColtroller@create")->name('usercourses.create');
+Route::get('/usercourses/addcourse', "UsercoursesColtroller@addcourse")->name('usercourses.addcourse');
+Route::post('/usercourses/store', "UsercoursesColtroller@store")->name('usercourses.store');
 
 Route::get('/courses','CourseController@index')->name('courses');
 

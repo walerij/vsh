@@ -14,6 +14,7 @@ class UsercoursesColtroller extends Controller
     }
 
     public function index()
+
     {
         //dump("вывод курсов пользователя");
         $user = auth()->user();
@@ -23,16 +24,46 @@ class UsercoursesColtroller extends Controller
 
     }
 
-    public function create()
-    {
+    public function addcourse()
+    {   $user = auth()->user();
         $courses = course::all();
-        return view('usercourses.index', compact('courses'));
+        return view('usercourses.addcourse', compact('courses','user'));
     }
 
-    public function store(UserCourses $userCourse)
+
+    public function create(course $Course)
     {
 
-       return redirect()->route('usercourses.index');
+
+       $course =  $Course;
+        $data= request()->validate([
+            'user_id'=>'unsignedBigInteger',
+            'courses_id'=>'unsignedBigInteger',
+
+        ]);
+        $user_course = UserCourses::firstOrCreate(['courses_id'=>$Course->id,'user_id'=>auth()->user()->id],$data);
+        return redirect()->route('usercourses');
+
+    }
+
+
+
+
+
+
+    public function store(course $Course)
+    {
+        //dd($userCourse);
+        $data= request()->validate([
+            'user_id'=>'unsignedBigInteger',
+            'courses_id'=>'unsignedBigInteger',
+
+        ]);
+
+       // dd($data);
+
+       $user_course = UserCourses::firstOrCreate(['courses_id'=>$Course->id,'user_id'=>auth()->user()->id],$data);
+       return redirect()->route('usercourses');
         //    dd("Добавление курса для данного пользователя");
     }
 

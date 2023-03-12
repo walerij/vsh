@@ -1,5 +1,6 @@
 @extends('layouts.courses')
-<h3>Курсы для пользователя {{$user->name}}</h3>
+
+<h3>Выбор курса для пользователя {{$user->name}}</h3>
 @section('content')
     @foreach($courses as $course)
         <div class="card" style="width: 18rem;">
@@ -7,12 +8,10 @@
             <div class="card-body">
                 <h5 class="card-title">{{$course->course}}</h5>
                 <p class="card-text">{{$course->info}}</p>
-                <a href="#" class="btn btn-primary">Подробнее</a>
+                <a href="{{route('usercourses.create', $course->id)}}" class="btn btn-primary">Подписаться на курс</a>
             </div>
         </div>
 
     @endforeach
-    <hr>
-         <a class="btn btn-info" href="{{route('usercourses.addcourse')}}">Добавить подписку на курс</a>
-    <hr>
+
 @endsection

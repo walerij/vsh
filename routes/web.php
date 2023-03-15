@@ -22,6 +22,8 @@ Route::get('/usercourses/addcourse', "UsercoursesColtroller@addcourse")->name('u
 Route::post('/usercourses/store', "UsercoursesColtroller@store")->name('usercourses.store');
 
 Route::get('/courses','CourseController@index')->name('courses');
+Route::get('/courses/create','CourseController@create')->name('courses.create');
+Route::post('/courses/store', [App\Http\Controllers\CourseController::class, "store"])->name('courses.store');
 
 Auth::routes();
 

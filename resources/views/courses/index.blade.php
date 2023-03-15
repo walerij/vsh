@@ -1,5 +1,9 @@
 @extends('layouts.courses')
+
 @section('content')
+    <div>
+        <a class="btn bg-primary" href="{{route('courses.create')}}">Добавить новый курс</a>
+    </div>
     @foreach($courses as $course)
         <div class="card" style="width: 18rem;">
             <img src="..." class="card-img-top" alt="...">

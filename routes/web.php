@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,18 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/usercourses', "UsercoursesColtroller@index")->name('usercourses');
-Route::get('/usercourses/{course}/create', "UsercoursesColtroller@create")->name('usercourses.create');
-Route::get('/usercourses/addcourse', "UsercoursesColtroller@addcourse")->name('usercourses.addcourse');
-Route::post('/usercourses/store', "UsercoursesColtroller@store")->name('usercourses.store');
+Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('/usercourses', "UsercoursesColtroller@index")->name('user_courses');
+Route::get('/usercourses/{course}/create', "UsercoursesColtroller@create")->name('user_courses.create');
+Route::get('/usercourses/addcourse', "UsercoursesColtroller@addcourse")->name('user_courses.add_course');
+Route::post('/usercourses/store', "UsercoursesColtroller@store")->name('user_courses.store');
 
 Route::get('/courses','CourseController@index')->name('courses');
 Route::get('/courses/create','CourseController@create')->name('courses.create');
 Route::post('/courses/store', [App\Http\Controllers\CourseController::class, "store"])->name('courses.store');
-
+Route::get('/lesson/{courl}',[\App\Http\Controllers\lessonController::class,'lesson'])->name('lesson');
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+/// admin
+Route::group(['prefix'=>'admin','namespace'=>'Admin'],function (){
+    Route::get('/',[\App\Http\Controllers\Admin\MainController::class,'index'])->name('admin.index');
+});
+///
+

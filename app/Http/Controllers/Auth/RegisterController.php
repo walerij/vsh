@@ -84,7 +84,7 @@ class RegisterController extends Controller
 
         //Сохраняем новость в БД
         $data['photo'] = public_path('image/user_profiles/').$filename;
-        dd($data['photo']);
+        //dd($data['photo']);
 
 
         return User::create([

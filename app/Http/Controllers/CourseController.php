@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\course;
 use Illuminate\Http\Request;
 
@@ -10,8 +11,9 @@ class CourseController extends Controller
     public function index() // вывод всех курсов
     {
 
-        $courses = course::all();
-        return view('courses.index', compact('courses'));
+        $course = course::query()->get();
+        $category_courses = Category::query()->get();
+        return view('courses.index',['course'=>$course]);
         //$course = course::find(87);
 
        // dd($course->getlessons);

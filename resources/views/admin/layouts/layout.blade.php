@@ -138,7 +138,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="{{route('home')}}" class="brand-link" target="_blank">
+        <a href="{{ url('/') }}" target="_blank" class="brand-link">
             <img src="{{ asset('assets/admin/img/AdminLTELogo.png') }}"
                  alt="AdminLTE Logo"
                  class="brand-image img-circle elevation-3"
@@ -161,40 +161,54 @@
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                         with font-awesome or any other icon font library -->
-
                     <li class="nav-item">
-                        <a href="{{route('admin.index')}}" class="nav-link">
+                        <a href="{{ route('admin.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-home"></i>
                             <p>Главная</p>
                         </a>
                     </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <i class="nav-icon fas fa-archive"></i>
                             <p>
-                                Dashboard
+                                Категории
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="../../index.html" class="nav-link">
+                                <a href="{{ route('categories.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v1</p>
+                                    <p>Список категорий</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../../index2.html" class="nav-link">
+                                <a href="{{ route('categories.create') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v2</p>
+                                    <p>Новая категория</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-less-than-equal"></i>
+                            <p>
+                                Курсы
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('courses.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Список Курсов</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../../index3.html" class="nav-link">
+                                <a href="{{ route('courses.create') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v3</p>
+                                    <p>Новый курс</p>
                                 </a>
                             </li>
                         </ul>
@@ -207,8 +221,32 @@
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="list-unstyled">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        {{session('success')}}
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    <div class="content-wrapper">
+
 @yield('content')
-    <!-- /.content-wrapper -->
+    </div>
+<!-- /.content-wrapper -->
 
     <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
@@ -227,7 +265,16 @@
 <!-- ./wrapper -->
 
 <script src="{{ asset('assets/admin/js/admin.js') }}"></script>
+<script>
+    $('.nav-sidebar a').each(function(){
+        let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
+        let link = this.href;
+        if(link == location){
+            $(this).addClass('active');
+            $(this).closest('.has-treeview').addClass('menu-open');
+        }
+    });
+</script>
 
 </body>
 </html>
-

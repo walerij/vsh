@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('/home',[HomeController::class,'index'])->name('home');
 Route::get('/usercourses', "UsercoursesColtroller@index")->name('user_courses');
 Route::get('/usercourses/{course}/create', "UsercoursesColtroller@create")->name('user_courses.create');
 Route::get('/usercourses/addcourse', "UsercoursesColtroller@addcourse")->name('user_courses.add_course');
@@ -30,6 +30,8 @@ Auth::routes();
 /// admin
 Route::group(['prefix'=>'admin','namespace'=>'Admin'],function (){
     Route::get('/',[\App\Http\Controllers\Admin\MainController::class,'index'])->name('admin.index');
+    Route::resource('/categories','CategoryController');
+    Route::resource('/courses','CoursesController');
 });
 ///
 

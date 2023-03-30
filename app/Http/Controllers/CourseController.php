@@ -11,8 +11,11 @@ class CourseController extends Controller
     public function index() // вывод всех курсов
     {
 
-        $course = course::query()->get();
-        $category_courses = Category::query()->get();
+        $course = Category::query()->find(2);
+        dd($course->Course);
+
+        /*$course = course::query()->get();
+        $category_courses = Category::query()->get();*/
         return view('courses.index',['course'=>$course]);
         //$course = course::find(87);
 

@@ -15,7 +15,7 @@ class lessonController extends Controller
     public function lesson($courl)
     {
         $courset = course::query()->where('courl', '=', $courl)->first();
-
+        dd($courset);
        //dd($courset);
         return view('lesson',['courset'=>$courset]);
     }

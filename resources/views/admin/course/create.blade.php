@@ -35,16 +35,16 @@
                                 <div class="form-group">
                                     <label for="title">Название</label>
                                     <input type="text" name="course"
-                                           class="form-control @error('title') is-invalid @enderror" id="title"
+                                           class="form-control @error('course') is-invalid @enderror" id="title"
                                            placeholder="Название">
                                 </div>
                                 <div class="form-group">
                                     <label for="info">Информация о курсе</label>
-                                    <textarea name="info" class="form-control" rows="5" id="info" placeholder="Информация о курсе ..."></textarea>
+                                    <textarea name="info" class="form-control @error('info') is-invalid @enderror" rows="5" id="info" placeholder="Информация о курсе ..."></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="category_id">Категория</label>
-                                    <select  class="form-control" id="category_id" name="category_id">
+                                    <select  class="form-control @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
                                       @foreach($categories as $k=>$v)
 
                                             <option value="{{ $k }}">{{ $v }}</option>
@@ -56,12 +56,13 @@
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" name="img" id="img"
-                                                   class="custom-file-input">
+                                                   class="custom-file-input @error('img') is-invalid @enderror">
                                             <label class="custom-file-label" for="img">Изображение</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <!-- /.card-body -->
 
                             <div class="card-footer">

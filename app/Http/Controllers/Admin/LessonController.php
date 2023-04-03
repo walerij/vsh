@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\course;
+use App\Models\lesson;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
-class CoursesController extends Controller
+class LessonController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,7 @@ class CoursesController extends Controller
      */
     public function index()
     {
-
-        $courses = course::query()->paginate(5);
-        return view('admin.course.index',['courses'=>$courses]);
+        return view('admin.lessons.index');
     }
 
     /**
@@ -29,8 +27,8 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        $categories=Category::query()->pluck('title','id')->all();
-        return view('admin.course.create',['categories'=>$categories]);
+        $courses=course::query()->pluck('course','id')->all();
+        return view('admin.lessons.create',['courses'=>$courses]);
     }
 
     /**
@@ -41,7 +39,7 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+       /* $request->validate([
             'course' => 'required',
             'info' => 'required',
             'category_id' => 'required|integer',
@@ -51,16 +49,21 @@ class CoursesController extends Controller
             'info.required'=>'Поле не должно быть пустым ',
             'category_id.required'=>'Поле не должно быть пустым ',
             'img.required'=>'Поле не должно быть пустым ',
-            ]);
+        ]);*/
         /*$request->validate([
             'title'=>'required',
         ],);*/
+        $request->validate(['inputs.*.video'=>'required','inputs.*.video_length'=>'required']);
+      //  dd($request->all());
         $data = $request->all();
-        $data['img'] = course::uploadImage($request);
-        $courese = course::query()->create($data);
+        lesson::query()->create($data);
+     /*   foreach ($request->inputs as $key => $value)
+        {
+            lesson::query()->create($value);
+        }
+        $data = $request->all();*/
         $request->session()->flash('success','Курс успешно добавлен');
-        return redirect()->route('courses.index');
-
+        return redirect()->route('lessons.index');
     }
 
     /**
@@ -69,21 +72,20 @@ class CoursesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
+    public function show($id)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $courses = course::query()->find($id);
-        $categories = Category::query()->pluck('title', 'id')->all();
-
-        return view('admin.course.edit',['categories'=>$categories,'courses'=>$courses]);
-
+        //
     }
 
     /**
@@ -91,40 +93,21 @@ class CoursesController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'course' => 'required',
-            'info' => 'required',
-            'category_id' => 'required|integer',
-            'img' => 'nullable|image',
-        ],[
-            'course.required'=>'Поле не должно быть пустым ',
-            'info.required'=>'Поле не должно быть пустым ',
-            'category_id.required'=>'Поле не должно быть пустым ',
-            'img.required'=>'Поле не должно быть пустым ',
-        ]);
-        $courses = course::query()->find($id);
-        $data = $request->all();
-        $data['img'] = course::uploadImage($request,$courses->img);
-        $courses->update($data);
-        return redirect()->route('courses.index')->with('success','Изменение сохранены');
-
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $corses = course::find($id);
-        Storage::delete($corses->img);
-        $corses->delete();
-        return redirect()->route('courses.index')->with('success', 'Курс удален');
+        //
     }
 }

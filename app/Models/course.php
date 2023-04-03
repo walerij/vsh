@@ -1,14 +1,14 @@
 <?php
 
 namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 class course extends Model
 {
     use Sluggable;
-
+    protected $fillable = ['course', 'info', 'category_id', 'img'];
     protected $guarded = false;
 
 
@@ -20,7 +20,10 @@ class course extends Model
             ]
         ];
     }
-
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 
     public function getlessons(){
         return $this->hasMany(lesson::class, 'course_id', 'id');
@@ -35,8 +38,23 @@ class course extends Model
         return $this->hasMany(lesson::class);
     }
 
-    public function category()
+
+    public static function uploadImage(Request $request,$image = null)
     {
-        return $this->belongsTo(Category::class);
+        if ($request->hasFile('img')) {
+            if($image){
+                Storage::delete($image);
+            }
+            $folder = date('Y-m-d');
+            return $request->file('img')->store("images/{$folder}");
+        }
+        return null;
+    }
+    public function getImage()
+    {
+        if($this->img){
+            return asset('no-image.png');
+        }
+        return asset("uploads/{$this->thumbnail}");
     }
 }

@@ -213,6 +213,30 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-less-than"></i>
+                            <p>
+                                Уроки
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('lessons.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Список уроков</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('lessons.create') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Новый видеоуроки</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -275,6 +299,31 @@
         }
     });
 </script>
-
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+<script>
+    var i = 0;
+    $('#add').click(function (){
+        ++i;
+        $('#table-lessons').append(
+            `<tr>
+                                <td>
+<input type="text" name="inputs[`+i+`][video]" placeholder="ссылка на ютуб урок" class="form-control">
+</td>
+<td>
+<input type="text" name="inputs[`+i+`][video_length]" placeholder="ссылка на ютуб урок" class="form-control">
+</td>
+<td>
+<select  class="form-control " id="course_id" name="inputs[0][course_id]"> </select>
+</td>
+                                <td>
+<button type="button"  class="btn btn-danger remove-table-row">Удалить</button>
+</td>
+                                 </tr>`
+        );
+    });
+    $(document).on('click','.remove-table-row',function (){
+       $(this).parents('tr').remove();
+    });
+</script>
 </body>
 </html>

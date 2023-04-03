@@ -10,6 +10,11 @@ class Category extends Model
     use Sluggable;
     protected $fillable = ['title'];
 
+
+    public function courses()
+    {
+        return $this->hasMany(course::class);
+    }
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -27,9 +32,6 @@ class Category extends Model
     {
         return $this->hasMany(course::class);
     }*/
-    public function Course()
-    {
-        return $this->hasMany(course::class);
-    }
+
 
 }

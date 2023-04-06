@@ -26,6 +26,7 @@ Route::post('/courses/store', [App\Http\Controllers\CourseController::class, "st
 Route::get('/lesson/{courl}',[\App\Http\Controllers\lessonController::class,'lesson'])->name('lesson');
 Auth::routes();
 
+
 /// admin
 Route::group(['prefix'=>'admin','namespace'=>'Admin'],function (){
     Route::get('/',[\App\Http\Controllers\Admin\MainController::class,'index'])->name('admin.index');

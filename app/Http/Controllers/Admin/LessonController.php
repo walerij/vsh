@@ -17,7 +17,8 @@ class LessonController extends Controller
      */
     public function index()
     {
-        return view('admin.lessons.index');
+        $lessons = lesson::query();
+        return view('admin.lessons.index',['lessons'=>$lessons]);
     }
 
     /**
@@ -39,29 +40,23 @@ class LessonController extends Controller
      */
     public function store(Request $request)
     {
-       /* $request->validate([
-            'course' => 'required',
-            'info' => 'required',
-            'category_id' => 'required|integer',
-            'img' => 'nullable|image',
-        ],[
-            'course.required'=>'Поле не должно быть пустым ',
-            'info.required'=>'Поле не должно быть пустым ',
-            'category_id.required'=>'Поле не должно быть пустым ',
-            'img.required'=>'Поле не должно быть пустым ',
-        ]);*/
-        /*$request->validate([
-            'title'=>'required',
-        ],);*/
-        $request->validate(['inputs.*.video'=>'required','inputs.*.video_length'=>'required']);
-      //  dd($request->all());
-        $data = $request->all();
-        lesson::query()->create($data);
-     /*   foreach ($request->inputs as $key => $value)
-        {
-            lesson::query()->create($value);
+        $request->validate([
+            'inputs.*.video'=>'required',
+            'inputs.*.video_length'=>'required',
+            'inputs.*.lesson'=>'required',
+            'inputs.*.intro'=>'required',
+        ]);
+        //Multiple insert queries
+        $inputs = $request->collect('inputs');
+        foreach ($inputs as $input) {
+          lesson::create([
+              'course_id'=>$request->collect('course_id')->join(''),
+              'video'=>$input['video'],
+              'video_length'=>$input['video_length'],
+              'lesson'=>$input['lesson'],
+              'intro'=>$input['intro'],
+          ]);
         }
-        $data = $request->all();*/
         $request->session()->flash('success','Курс успешно добавлен');
         return redirect()->route('lessons.index');
     }

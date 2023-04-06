@@ -310,11 +310,10 @@
 <input type="text" name="inputs[`+i+`][video]" placeholder="ссылка на ютуб урок" class="form-control">
 </td>
 <td>
-<input type="text" name="inputs[`+i+`][video_length]" placeholder="ссылка на ютуб урок" class="form-control">
+<input type="text" name="inputs[`+i+`][video_length]"  class="form-control">
 </td>
-<td>
-<select  class="form-control " id="course_id" name="inputs[0][course_id]"> </select>
-</td>
+  <td><input type="text" name="inputs[`+i+`][lesson]" placeholder="" class="form-control"></td>
+                                        <td><textarea type="text" name="inputs[`+i+`][intro]" placeholder="" class="form-control"></textarea></td>
                                 <td>
 <button type="button"  class="btn btn-danger remove-table-row">Удалить</button>
 </td>

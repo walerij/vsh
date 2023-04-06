@@ -50,14 +50,16 @@
                                 <table class="table table-bordered " id="table-lessons">
                                     <tr>
                                         <th>Урок</th>
-                                        <th>time</th>
+                                        <th>Время урока</th>
+                                        <th>Название урока</th>
+                                        <th>Описание урока</th>
                                         <th>Action</th>
                                     </tr>
                                     <tr>
                                         <td><input type="text" name="inputs[0][video]" placeholder="ссылка на ютуб урок" class="form-control"></td>
                                         <td><input type="text" name="inputs[0][video_length]" placeholder="" class="form-control"></td>
-                                        <td><input type="text" name="inputs[0][intro]" placeholder="" class="form-control"></td>
-
+                                        <td><input type="text" name="inputs[0][lesson]" placeholder="" class="form-control"></td>
+                                        <td><textarea type="text" name="inputs[0][intro]" placeholder="" class="form-control"></textarea></td>
                                         <td><button type="button" name="add" id="add" class="btn btn-success">Добавить урок</button></td>
                                     </tr>
                                 </table>
